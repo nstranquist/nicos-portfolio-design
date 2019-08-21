@@ -1,0 +1,567 @@
+/* variables and imports */
+@font-face {
+  font-family: 'The Historia Demo';
+  src: url('./TheHistoriaDemo.ttf');
+}
+
+/*#region GLOBALS */
+:root {
+  --bg-color: darkslateblue;
+  --font-color: #eee;
+  --topnav-bg-color: #16162d;
+  --color-yellow: #ffe838;
+  --color-pink: #fd57bf;
+}
+html {
+  font-size: 10px;
+  font-family: 'Roboto', sans-serif;
+  color: #eee;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100%;
+  height: 100%;
+  /*background: url('images/nico/ff-3.jpg') no-repeat center fixed;*/
+  background: var(--bg-color) no-repeat center fixed;
+  background-size: cover;
+}
+section {
+  padding: 6rem 0;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: var(--font-color);
+}
+p {
+  font-size: 1.8rem;
+  font-weight: 300;
+}
+img {
+  width: 100%;
+}
+/*#endregion GLOBALS */
+
+/*#region REUSABLE */
+.container {
+  position: relative;
+  height: 100%;
+  max-width: 120rem;
+  width: 90%;
+  margin: 0 auto;
+}
+.section-heading {
+  margin-bottom: 10rem;
+  text-align: center;
+}
+.section-heading h1 {
+  position: relative;
+  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: rgba(255,255,255,.3);
+  text-transform: uppercase;
+}
+.section-heading h1::before,
+.section-heading h1::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -.5rem;
+  background-color: rgba(255,255,255,.75);
+  transform: translateX(-50%);
+}
+.section-heading h1::before {
+  height: 3px;  
+  width: 10rem;
+  border-radius: .8rem;
+}
+.section-heading h1::after {
+  width: 1.5rem;
+  height: 1.5rem;
+  bottom: -1rem;
+  border-radius: 100%;
+}
+.section-heading h6 {
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+/* keep pic to right */
+.has-margin-right {
+  margin-right: 5rem;
+}
+/*#endregion REUSABLE */
+
+
+/*#region HEADER */
+header {
+  width: 100%;
+  height: 100vh;
+}
+.top-nav {
+  position: fixed;
+  top: -100vh; /* hides nav for now */
+  width: 100%;
+  height: 100vh;
+  z-index: 50;
+  background-color: var(--topnav-bg-color);
+  border-bottom-right-radius: 100%;
+  border-bottom-left-radius: 100%;
+  transition: all 650ms cubic-bezier(1,0,0,1);
+}
+.nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+li{
+  margin: 0 2rem;
+}
+.nav-link {
+  padding: 1rem;
+  font-family: 'The Historia Demo', sans-serif;
+  font-size: 5rem;
+}
+.nav-link:hover,
+.nav-link:focus {
+  background: linear-gradient(to top, #ffe838, #fd57bf);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.top-nav.open { /* styles for top nav when it's opened */
+  top: 0;
+  border-radius: initial; /*gives nice animation effect(?) */
+}
+.menu-toggler {
+  position: absolute;
+  top: 5rem;
+  right: 5rem;
+  width: 5rem;
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 1500;
+  transition: transform 650ms ease-out;
+}
+.menu-toggler.open {
+  transform: rotate(-45deg);
+}
+/* menu bar styles */
+.bar {
+  background: linear-gradient(to right, var(--color-yellow), var(--color-pink));
+  width: 100%;
+  height: 4px;
+  border-radius: .8rem;
+}
+.bar.half {
+  width: 50%;
+}
+.bar.start {
+  transform-origin: right;
+  transition: transform 650ms cubic-bezier(0.54,-0.81,0.57,0.57);
+}
+.open .bar.start {
+  transform: rotate(-450deg) translateX(.8rem); /* can multiply 90 by number for more dramatic effect */
+}
+.bar.end {
+  align-self: flex-end;
+  transform-origin: left;
+  transition: transform 650ms cubic-bezier(0.54,-0.81,0.57,0.57);
+}
+.open .bar.end {
+  transform: rotate(-450deg) translateX(-.8rem); /* can multiply 90 by number for more dramatic effect */
+}
+.landing-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centers perfectly in middle */
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+}
+.landing-text h1 {
+  font-size: 20rem;
+  font-family: 'The Historia Demo', sans-serif;
+  background: linear-gradient(to top, var(--color-yellow), var(--color-pink));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 1rem;
+  user-select: none; /* what(?) */
+}
+.landing-text h6 {
+  font-size: 2rem;
+  font-weight: 400;
+}
+/*#endregion HEADER */
+
+
+/*#region ABOUT */
+.about .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about-heading {
+  margin-bottom: 6rem;
+  line-height: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+.about-heading h1 {
+  font-size: 10rem;
+  opacity: .3;
+}
+.about-heading h6 {
+  font-size: 2rem;
+  font-weight: 300;
+}
+.profile-img {
+  flex: 1;
+  margin-right: 5rem;
+}
+.about-details {
+  flex: 1;
+}
+.social-media {
+  margin-top: 5rem;
+}
+.social-media i {
+  font-size: 5rem;
+  transition: color 450ms;
+}
+.social-media i:hover {
+  opacity: .8;
+}
+.fa-facebook-square {
+  color: #4267b2;
+}
+.fa-github-square {
+  color: #171515;
+}
+.fa-linkedin-square {
+  color: #0077B5;
+}
+/*#endregion ABOUT */
+
+/*#region SKILLS */
+.my-skills { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-gap: 2.5rem;
+  margin-top: 10rem;
+  text-align: center;
+}
+.skill {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.skill h1 {
+  margin: 2rem -2px 2rem 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+/* creates pretty pink square boxes */
+.icon-container {
+  display: flex;
+  width: 10rem;
+  height: 10rem;
+  margin-bottom: 2rem;
+  border: 3px solid var(--color-yellow);
+  background-color: var(--color-pink);
+  transform: rotate(45deg);
+}
+.icon-container i {
+  margin: auto;
+  color: var(--yellow);
+  font-size: 5rem;
+  transform: rotate(-45deg); /* sets up for animate on scroll (AOS) */
+}
+/*#endregion SKILLS */
+
+/*#region PORTFOLIO */
+.portfolio-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5rem; 
+}
+.portfolio-item:last-child {
+  margin-bottom: 0;
+}
+.profile-img {
+  flex: 1;
+  width: 50rem;
+}
+.portfolio-description {
+}
+.portfolio-description h1 {
+  margin: 1rem 0;
+  font-size: 3rem;
+  font-weight: 300;
+}
+.portfolio-description h6 {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+.portfolio-description .cta { /* Link Button */
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  color: #3883ff;
+  text-transform: uppercase;
+  border: 1px solid #2f67cd;
+  transition: color 450ms, background-color 450ms;
+}
+.portfolio-description .cta:hover {
+  color: var(--bg-color);
+  background-color: #2f67cd; 
+}
+/*#endregion PORTFOLIO */
+
+/*#region EXPERIENCES */
+.timeline ul {
+  position: relative;
+  margin: 0 auto;
+  padding: 5rem;
+  background-color: rgba(0,0,0,.05);
+  border-left: 4px solid var(--color-yellow);
+  border-radius: .8rem;
+  text-align: left;
+  width: 70%; /* optional */
+}
+.timeline h1 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  opacity: .3;
+}
+.timeline .date {
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+.timeline .date:last-of-type {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border: none;
+}
+.timeline .date::before,
+.timeline .date::after {
+  position: absolute;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.timeline .date::before {
+  content: attr(data-date);
+  left: -22rem;
+  min-width: 12rem;
+  text-align: right;
+  font-size: 1.5rem;
+}
+.timeline .date::after {
+  content: '';
+  left: -8rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: #313534;
+  box-shadow: 0 0 0 4px var(--color-pink);
+  border-radius: 100%;
+}
+/*#endregion EXPERIENCES */
+
+/*#region CONTACT */
+.contact {
+  background-color: #221e3f;
+}
+form {
+  width: 70%;
+  margin: 0 auto;
+}
+form label {
+  font-size: 1.5rem;
+}
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 5px;
+  border: none;
+  outline: var(--color-pink);
+}
+input[type="submit"] {
+  width: initial; /* prevents from taking all available space */
+  padding: 1rem 2rem;
+  background-color: var(--color-pink);
+  color: var(--bg-color);
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background-color 650ms;
+}
+input[type="submit"]:hover {
+  color: #221e3f;
+  background-color: #ffe838;
+}
+/*#endregion CONTACT */
+
+/*#region FOOTER */
+.copyright {
+  position: relative;
+  width: 100%;
+  padding: 2rem 0;
+  text-align: center;
+  background-color: #16162d;
+}
+.up {
+  position: absolute;
+  top: -2.5rem;
+  right: 5rem;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  background-color: var(--bg-color);
+  border-radius: 100%;
+  cursor: pointer;
+  animation: pulse 2s infinite;
+}
+.up i {
+  margin: auto;
+  color: #16162d;
+  font-size: 2rem;
+}
+.copyright p {
+}
+/*#endregion FOOTER */
+
+/*#region ANIMATIONS */
+@keyframes pulse {
+  0%{
+    box-shadow: 0 0 0 0 rgba(253,87,191,.99);
+  }
+  70%{
+    box-shadow: 0 0 0 2rem rgba(253,87,191,0)
+  }
+  100%{
+    box-shadow: 0 0 0 0 rgba(253,87,191,0)
+  }
+}
+/*#endregion ANIMATIONS */
+
+/*#region MEDIA QUERIES */
+@media screen and (max-width: 768px) {
+  body {
+    /*background: url('images/nico/ff-3.jpg') no-repeat center fixed;*/
+    background: darkslateblue no-repeat center fixed;
+    background-size: cover;
+  }
+  .landing-text h1 {
+    font-size: 15rem;
+  }
+  .landing-text h6 {
+    font-size: 1.7rem;
+  }
+  .nav-list {
+    flex-direction: column;
+  }
+  .nav-list li {
+    margin: 2rem 0;
+  }
+  .nav-link {
+    font-size: 4.5rem;
+  }
+  .about-heading h1 {
+    font-size: 8rem;
+  }
+  .section-heading h1 {
+    font-size: 3rem;
+  }
+  .about-details .nav-list {
+    flex-direction: initial; /* reverts to default value */
+  }
+  .about-details li {
+    margin: 0 2rem;
+  }
+  .icon-container {
+    width: 7rem;
+    height: 7rem;
+  }
+  .icon-container i {
+    font-size: 4rem;
+  }
+  .timeline ul {
+    margin: 0 0 0 auto;
+  }
+  .timeline .date::before {
+    left: -22rem;
+  }
+  .timeline .date::after {
+  }
+}
+@media screen and (max-width: 600px) {
+  .menu-toggler {
+    top: 2rem;
+    right: 2rem;
+  }
+  .landing-text h1 {
+    font-size: 8rem;
+  }
+  .landing-text h6 {
+  }
+  .nav-link {
+    font-size: 3.5rem;
+  }
+  .about .container {
+    flex-direction: column; /* make items stack for mobile */
+  }
+  .profile-img {
+    margin: 0 0 7rem 0; /* gives bottom margin only */
+  }
+  .portfolio-item {
+    flex-direction: column;
+  }
+  .portfolio-img {
+    margin: 0 0 2rem 0;
+    order: 1; /* resets order for middle portfolio item */
+  }
+  .portfolio-description {
+    margin: 0;
+    order: 2; /* resets order for middle portfolio item */
+  }
+  .timeline p {
+    font-size: 1.6rem;
+  }
+  .timeline .date::before {
+    font-size: 1.4rem;
+  }
+  form {
+    width: 100%;
+  }
+  .up {
+    right: 2rem;
+  }
+}
+/*#endregion MEDIA QUERIES */
